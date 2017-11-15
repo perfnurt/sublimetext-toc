@@ -1,2 +1,6 @@
 # sublimetext-toc
-Table of Contents plugin for Sublime Text
+Markdown Table of Contents plugin for Sublime Text
+
+
+## Installation
+Put the files in ~/.config/sublime-text-3/Packages/User
