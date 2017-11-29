@@ -1,0 +1,21 @@
+[
+{
+	"id" : "md_toc",	
+    "caption" : "Markdown: Table of Contents",
+    "command":"markdown_toc_about"
+},{
+	"id" : "md_toc",	
+    "caption" : "Generate ToC",
+    "command" : "markdown_toc6"
+},{
+    "id" : "md_toc",    
+    "caption" : "Generate ToC",
+    "children":[
+        {"caption":"Max header depth : 2", "command" : "markdown_toc2"},
+        {"caption":"Max header depth : 3", "command" : "markdown_toc3"},
+        {"caption":"Max header depth : 4", "command" : "markdown_toc4"},
+        {"caption":"Max header depth : 5", "command" : "markdown_toc5"},
+        {"caption":"Max header depth : 6 (default)", "command" : "markdown_toc6"}
+    ]       
+}
+]
