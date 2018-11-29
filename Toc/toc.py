@@ -20,6 +20,14 @@ def MarkdownToc(self, edit,  maxLevel):
 				indent = "    " * (level -1)
 				headline = line[level+1:].strip()
 				headlineref = headline.lower()
+
+				s = list(headlineref)
+				i=0
+				for ch in s:
+					if not ch.isalnum():
+						s[i]="-"
+					i+=1
+				headlineref = "".join(s)
 				for s in [" ",":","(",")", "/", "&", "'", "---", "--"]:
 					headlineref=headlineref.replace(s, "-")
 
@@ -84,4 +92,3 @@ class MarkdownToc5Command(sublime_plugin.TextCommand):
 class MarkdownToc6Command(sublime_plugin.TextCommand):
 	def run(self, edit):
 		MarkdownToc(self, edit,  6)
-
