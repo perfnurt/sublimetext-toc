@@ -20,7 +20,7 @@ def MarkdownToc(self, edit,  maxLevel):
 				indent = "    " * (level -1)
 				headline = line[level+1:].strip()
 				headlineref = headline.lower()
-				for s in [" ",":","(",")", "/", "&", "---", "--"]:
+				for s in [" ",":","(",")", "/", "&", "'", "---", "--"]:
 					headlineref=headlineref.replace(s, "-")
 
 				txt = indent + "* [" + headline + "](#" + headlineref+ ")"
