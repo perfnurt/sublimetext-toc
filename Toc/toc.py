@@ -1,11 +1,13 @@
 import sublime
 import sublime_plugin
+import re
 
 def MarkdownToc(self, edit,  maxLevel):
 	contents = self.view.substr(sublime.Region(0, self.view.size()))
 	lines = contents.splitlines()
 
 	ignoreCount = 2 # Doc name, Toc itself
+	indentSize = 4
 
 	lowest_level = 1000
 
@@ -17,19 +19,11 @@ def MarkdownToc(self, edit,  maxLevel):
 				if level < lowest_level:
 					lowest_level = level
 
-				indent = "    " * (level -1)
+				indent = (" "* indentSize) * (level -1)
 				headline = line[level+1:].strip()
 				headlineref = headline.lower()
-
-				s = list(headlineref)
-				i=0
-				for ch in s:
-					if not ch.isalnum():
-						s[i]="-"
-					i+=1
-				headlineref = "".join(s)
-				for s in [" ",":","(",")", "/", "&", "'", "---", "--"]:
-					headlineref=headlineref.replace(s, "-")
+				headlineref = re.sub(r'[^_a-zA-Z0-9]', "-", headlineref)
+				for s in ["---", "--"]: headlineref=headlineref.replace(s, "-")
 
 				txt = indent + "* [" + headline + "](#" + headlineref+ ")"
 				result.append(txt)
@@ -46,11 +40,12 @@ def MarkdownToc(self, edit,  maxLevel):
 
 		result = "\n".join(result)
 
-		tocSection = self.view.find("# Table of Contents", 0)
+		tocHeader = "# Table of Contents"
+		tocSection = self.view.find(tocHeader, 0)
 		if tocSection.a<0 :
 			sublime.message_dialog("""Markdown - Table of Contents:
-No \"# Table of contents\" section found.
-Result put in clipboard.""")
+No \"{}\" section found.
+Result put in clipboard.""".format(tocHeader))
 			sublime.set_clipboard(result)
 		else:
 			# Remove existing Toc
@@ -92,3 +87,4 @@ class MarkdownToc5Command(sublime_plugin.TextCommand):
 class MarkdownToc6Command(sublime_plugin.TextCommand):
 	def run(self, edit):
 		MarkdownToc(self, edit,  6)
+
